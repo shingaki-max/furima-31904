@@ -15,21 +15,22 @@
 
 ### Association
 - has_many  :items
+- has_many  :purchase
 
 ## items テーブル
 
-| Column          | Type             | Options                        |
-| --------------- | ---------------- | ------------------------------ |
-| item_name       | string           | null: false                    |
-| category        | string           | null: false                    |
-| price           | integer          | null: false                    |
-| image           | ActiveStorage    | null: false                    |
-| description     | text             | null: false                    |
-| state           | string           | null: false                    |
-| prefecture      | string           | null: false                    |
-| send_date       | string           | null: false                    |
-| shipping_charge | string           | null: false                    |
-| user            | references       | null: false, foreign_key: true |
+| Column             | Type             | Options                        |
+| ------------------ | ---------------- | ------------------------------ |
+| item_name          | string           | null: false                    |
+| category_id        | integer          | null: false                    |
+| price              | integer          | null: false                    |
+| image              | ActiveStorage    | null: false                    |
+| description        | text             | null: false                    |
+| state_id           | integer          | null: false                    |
+| prefecture_id      | integer          | null: false                    |
+| send_date_id       | integer          | null: false                    |
+| shipping_charge_id | integer          | null: false                    |
+| user               | references       | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
@@ -43,19 +44,19 @@
 
 ### Association
 - belongs_to  :item
-- belongs_to  :address
+- has_one :　address
 
 ## address テーブル
 
 | Column          | Type             | Options                        |
 | --------------- | ---------------- | ------------------------------ |
 | postal_code     | string           | null: false                    |
-| prefecture      | string           | null: false                    |
+| prefecture_id   | integer          | null: false                    |
 | municipalities  | string           | null: false                    |
 | address         | string           | null: false                    |
 | building_name   | string           |                                |
 | phone_number    | string           | null: false                    |
-| item            | references       | null: false, foreign_key: true |
+| purchase        | references       | null: false, foreign_key: true |
 
 ### Association
 - belongs_to  :purchase
