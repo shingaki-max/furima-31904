@@ -8,6 +8,6 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :send_date
 
-
-  validates :category_id, presence: true
+  validates :item_name, :category_id, :price, :image, :description, :shipping_charge_id,  :state_id, :prefecture_id, :send_date_id, :price, presence: true
+  validates :price, numericality: { in: 300..9999999 }
 end
