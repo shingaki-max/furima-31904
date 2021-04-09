@@ -8,7 +8,6 @@ class Item < ApplicationRecord
   belongs_to_active_hash :prefecture
   belongs_to_active_hash :send_date
 
- # validates :item_name, :category_id, :price, :image, :description, :shipping_charge_id,  :state_id, :prefecture_id, :send_date_id, :price
   validates :item_name, :image, :description, presence: true
   validates :category_id, :shipping_charge_id, :state_id, :prefecture_id, :send_date_id, numericality: { greater_than: 1} ,presence: true 
 

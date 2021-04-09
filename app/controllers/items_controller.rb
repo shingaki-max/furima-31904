@@ -15,11 +15,6 @@ before_action :authenticate_user!, only: [:new,:create]
   end
 
 private 
-  
-  
-#  def configure_permitted_parameters
-#    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-#  end
   def item_params
     params.require(:item).permit(:item_name, :category_id, :price, :image, :description, :shipping_charge_id, :state_id, :prefecture_id, :send_date_id).merge(user_id: current_user.id)
   end
