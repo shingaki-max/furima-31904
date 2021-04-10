@@ -15,7 +15,7 @@ before_action :authenticate_user!, only: [:new,:create]
   end
 
   def index
-    @item = Item.all.order("created_at DESC")
+    @items = Item.all.order("created_at DESC")
   end
 
 private 
