@@ -18,6 +18,10 @@ before_action :authenticate_user!, only: [:new,:create]
     @items = Item.all.order("created_at DESC")
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
+
 private 
   def item_params
     params.require(:item).permit(:item_name, :category_id, :price, :image, :description, :shipping_charge_id, :state_id, :prefecture_id, :send_date_id).merge(user_id: current_user.id)
