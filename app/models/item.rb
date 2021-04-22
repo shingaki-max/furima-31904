@@ -14,4 +14,5 @@ class Item < ApplicationRecord
   validates :price, presence: true, inclusion: { in: 300..9999999 }
 
   belongs_to :user
+  has_one :purchase
 end
