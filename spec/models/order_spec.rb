@@ -10,6 +10,10 @@ RSpec.describe Order, type: :model do
       it '必須項目があれば登録できる' do
         expect(@order).to be_valid
       end
+      it '建物名がなくても登録できる' do
+        @order.building_name = ''
+        expect(@order).to be_valid
+      end
     end
 
     context '購入できない' do
@@ -48,11 +52,27 @@ RSpec.describe Order, type: :model do
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
       end
+      it '電話番号が未入力のため購入できない' do
+        @order.phone_number = ''
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number can't be blank")
+      end
       it 'tokenがないため購入できない' do
         @order.token = ''
         @order.valid?
         expect(@order.errors.full_messages).to include("Token can't be blank")
       end
+      it 'user_idがないため購入できない' do
+        @order.user_id = ''
+        @order.valid?
+        expect(@order.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idがないため購入できない' do
+        @order.item_id = ''
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Item can't be blank")
+      end
+
     end
   end
 end
