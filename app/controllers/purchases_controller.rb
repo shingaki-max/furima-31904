@@ -1,15 +1,20 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
-  before_action :check_user, only: [:index, :create]
+
 
   def index
     @order = Order.new
-    @item = Item.find(params[:item_id])
+    create_item
+    if current_user.id == @item.user_id || @item.purchase != nil
+      redirect_to root_path
+    end
   end
 
   def create
     @order = Order.new(purchase_params)
+    create_item
     if @order.valid?
+      pay_item
       @order.save
       redirect_to root_path
     else
@@ -19,13 +24,22 @@ class PurchasesController < ApplicationController
 
   private
   def purchase_params
-    params.require(:order).permit(:postal_code, :prefecture_id, :municipalities, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:order).permit(:postal_code, :prefecture_id, :municipalities, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
-  def check_user
-    @item = Item.find(params[:item_id])
-    if current_user.id == @item.user_id
-      redirect_to root_path
-    end
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: params[:token],
+      currency: 'jpy'
+    )
   end
+
+  def create_item
+    @item = Item.find(params[:item_id])
+  end
+
+  
+
 end
