@@ -60,6 +60,11 @@ RSpec.describe Order, type: :model do
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number can't be blank")
       end
+      it '電話番号が英数混合では登録できない' do
+        @order.phone_number = 'o123456789'
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number is not a number")
+      end
       it 'tokenがないため購入できない' do
         @order.token = ''
         @order.valid?
