@@ -24,6 +24,9 @@ before_action :check_user, only: [:edit, :update, :destroy]
   end
 
   def edit
+    if @item.purchase != nil
+      redirect_to root_path
+    end
   end
 
   def update
